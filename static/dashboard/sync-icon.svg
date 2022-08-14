@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="63px" height="63px" viewBox="0 0 63 63" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path d="M0 0L63 0L63 63L0 63L0 0Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="Synchronize-Icon">
+    <path d="M0 0L63 0L63 63L0 63L0 0Z" id="Background" fill="#FFFFFF" fill-opacity="0" fill-rule="evenodd" stroke="none" />
+    <g clip-path="url(#mask_1)">
+      <path d="M31.5 0L21 10.5L31.5 21L31.5 13.125C41.6299 13.125 49.875 21.3675 49.875 31.5C49.875 33.81 49.4268 36.0152 48.6445 38.0522L52.623 42.0256C54.2112 38.852 55.125 35.2853 55.125 31.5C55.125 18.4748 44.5279 7.875 31.5 7.875L31.5 0L31.5 0ZM10.377 20.9744C8.78883 24.148 7.875 27.7147 7.875 31.5C7.875 44.5252 18.4721 55.125 31.5 55.125L31.5 63L42 52.5L31.5 42L31.5 49.875C21.3701 49.875 13.125 41.6325 13.125 31.5C13.125 29.19 13.5732 26.9848 14.3555 24.9478L10.377 20.9744L10.377 20.9744Z" id="Shape" fill="#06203A" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="63px" height="63px" viewBox="0 0 63 63" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path d="M0 0L63 0L63 63L0 63L0 0Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="Search-Icon">
+    <path d="M0 0L63 0L63 63L0 63L0 0Z" id="Background" fill="#FFFFFF" fill-opacity="0" fill-rule="evenodd" stroke="none" />
+    <g clip-path="url(#mask_1)">
+      <path d="M23.625 5.24994C13.5079 5.24994 5.25001 13.5078 5.25001 23.6249C5.25001 33.7421 13.5079 41.9999 23.625 41.9999C28.2135 41.9999 32.4057 40.2885 35.6323 37.4882L36.75 38.6059L36.75 41.9999L52.5 57.7499L57.75 52.4999L42 36.7499L38.606 36.7499L37.4883 35.6323C40.2886 32.4056 42 28.2134 42 23.6249C42 13.5078 33.7422 5.24994 23.625 5.24994L23.625 5.24994ZM23.625 10.4999C30.9048 10.4999 36.75 16.345 36.75 23.6249C36.75 30.9047 30.9048 36.7499 23.625 36.7499C16.3452 36.7499 10.5 30.9047 10.5 23.6249C10.5 16.345 16.3452 10.4999 23.625 10.4999L23.625 10.4999Z" id="Shape" fill="#06203A" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>
