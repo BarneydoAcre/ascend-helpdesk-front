@@ -60,7 +60,7 @@
             <form id="company-form" class="modal">
                 <p class="form-title" style="text-align: center;">Escolha sua empresa!</p>
                 <div class="select-company">
-                    <a v-for="d,i in data" :key="i" :href="'/'+d.slug+'/dashboard/'">{{ d.company}}</a>
+                    <a v-for="d,i in data" :key="i" :href="'/'+d.slug+'/dashboard/'" @click="setCompany(d.company_id)">{{ d.company}}</a>
                 </div>
             </form>
 
@@ -78,12 +78,17 @@ export default {
         return {
             data: null,
             statusLogin: false,
+            username: '',
+            email: '',
+            password: '',
+            pass1: '',
+            pass2: '',
         }
     },
     methods: {
         async verifyLogin () {
             let token = {
-                token: window.sessionStorage.getItem('refresh')
+                token: localStorage.getItem('refresh')
             }
             const req = await fetch(process.env.HOST_BACK+'/auth/jwt/verify/', {
                 method: 'POST',
@@ -114,10 +119,11 @@ export default {
             })
             const res = await req.json()
             if (req.status == '200') {
-                window.sessionStorage.setItem('access', res.login_token.access)
-                window.sessionStorage.setItem('refresh', res.login_token.refresh)
-                window.sessionStorage.setItem('username', res.username)
-                window.sessionStorage.setItem('email', res.email)
+                localStorage.setItem('access', res.login_token.access)
+                localStorage.setItem('refresh', res.login_token.refresh)
+                localStorage.setItem('user_id', res.user_id)              
+                localStorage.setItem('username', res.username)
+                localStorage.setItem('email', res.email)
                 
                 this.getCompany()
                 this.verifyLogin()
@@ -128,20 +134,25 @@ export default {
             }
         },
         logout () {
-            window.sessionStorage.setItem('access', '')
-            window.sessionStorage.setItem('refresh', '')
-            window.sessionStorage.setItem('username', '')
-            window.sessionStorage.setItem('email', '')
+            localStorage.setItem('access', '')
+            localStorage.setItem('refresh', '')
+            localStorage.setItem('user_id', '')
+            localStorage.setItem('username', '')
+            localStorage.setItem('email', '')
+            localStorage.setItem('company', '')
             this.statusLogin = false
         },
         async getCompany () {
-            let email = window.sessionStorage.getItem('email')
+            let email = localStorage.getItem('email')
             const req = await fetch(process.env.HOST_BACK+'/getCompany/?email='+email+'&key=8168', {
                 method: 'GET'
             })
             const res = await req.json()
             this.data = res
         },
+        setCompany (id) {
+            localStorage.setItem('company', id)
+        }
     },
     mounted () {
         this.verifyLogin()

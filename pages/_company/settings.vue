@@ -1,0 +1,15 @@
+<template>
+    <div>
+        <Params></Params>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "Settings",
+}
+</script>
+
+<style>
+
+</style>

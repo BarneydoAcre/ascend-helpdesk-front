@@ -1,5 +1,5 @@
 <template>
-    <div id="home-login">
+    <div id="home-login" style="background-color: var(--baseColor)">
         <NavBarIndex class="navbar" />
         <ContentIndex class="content" />
         <LoginRegister class="login-register" />
@@ -49,7 +49,6 @@ export default {
     color: var(--textColor);
 }
 body {
-    background: var(--baseColor);
 }
 input {
     padding:.2vh;

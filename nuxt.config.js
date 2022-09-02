@@ -24,6 +24,11 @@ export default {
     ]
   },
 
+  router: {
+    // middleware: ['authenticated']
+  },
+
+  
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
   ],
@@ -34,7 +39,7 @@ export default {
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
-
+  
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
@@ -49,7 +54,20 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/dotenv',
   ],
-
+  
+  vuetify: {
+    theme: {
+      dark: true,
+      themes: {
+        dark: {
+          test: '#ff00ff',
+          primary: '#4c0000',
+          secondary: '#ff8c00',
+          accent: '#9c27b0'
+        }
+      }
+    }
+  },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
