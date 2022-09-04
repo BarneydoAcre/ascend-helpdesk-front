@@ -33,8 +33,6 @@ export default {
     font-family: 'Poppins', sans-serif;
     text-decoration: unset;
 }
-body {
-}
 input {
     padding:.2vh;
 }

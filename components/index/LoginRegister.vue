@@ -1,6 +1,6 @@
 <template>
     <div class="login-register">
-        <v-card>
+        <v-card height="100%">
 
             <div class="login-register-background">
                 <div v-if="statusLogin" class="login-register-button">
