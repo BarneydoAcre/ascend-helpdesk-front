@@ -1,5 +1,5 @@
 <template>
-    <div id="main-suport-action" class="d-flex flex-wrap justify-space-around">
+    <div id="main-suport-action" class="d-flex flex-wrap justify-space-around align-center">
         <AddCustomerCompany></AddCustomerCompany>
         <AddCustomerCompanyWorker></AddCustomerCompanyWorker>
         <AddTicket @getTickets="$emit('getTickets')"></AddTicket>

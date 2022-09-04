@@ -2,7 +2,6 @@
     <v-dialog v-model="dialog" max-width="85vw">
         <template v-slot:activator="{ on, attrs }">
             <v-btn 
-            tile 
             color="primary"
             width="10vw" 
             v-bind="attrs" 
@@ -95,7 +94,7 @@ export default {
     },
     mounted () {
         this.getCompanys()
-        this.getRequestTypes()
+        this.getRequestType()
         // this.validate()
     },
     methods: {
@@ -153,8 +152,8 @@ export default {
                 this.customers = res
             }
         },
-        async getRequestTypes () {
-            const req = await fetch(process.env.HOST_BACK+'/getRequestTypes/?'+ new URLSearchParams({
+        async getRequestType () {
+            const req = await fetch(process.env.HOST_BACK+'/getRequestType/?'+ new URLSearchParams({
                 company: localStorage.getItem('company'),
                 token: localStorage.getItem('refresh')
             }),{

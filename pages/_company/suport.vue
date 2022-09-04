@@ -33,9 +33,9 @@ export default {
 <style>
 #main-suport {
     display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
-    grid-template-rows: 19.2vh 19.2vh 19.2vh 19.2vh 19.2vh;
-    grid-template-areas: 'action action graphs graphs graphs'
+    grid-template-columns: 10% 20% 20% 20% 30%;
+    grid-template-rows: 9.2vh 29.2vh 9.2vh 19.2vh 29.2vh;
+    grid-template-areas: 'action action action graphs graphs'
                          'none none none none none'
                          'table table table table table'
                          'table table table table table'

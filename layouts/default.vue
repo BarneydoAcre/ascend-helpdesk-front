@@ -110,7 +110,7 @@ export default {
     },
     mounted() {
         this.verifyLogin();
-        // console.log(this.)
+        console.log(this.statusLogin)
     },
     beforeCreate() {
         this.$vuetify.theme.isDark = false;

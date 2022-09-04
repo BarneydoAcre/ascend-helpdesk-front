@@ -2,7 +2,6 @@
     <v-dialog v-model="dialog" max-width="85vw">
         <template v-slot:activator="{ on, attrs }">
             <v-btn
-            tile 
             color="primary"
             width="10vw" 
             v-bind="attrs" 

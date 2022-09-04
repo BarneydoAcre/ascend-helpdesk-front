@@ -90,7 +90,7 @@ export default {
     },
     mounted () {
         this.getCompanys()
-        this.getRequestTypes()
+        this.getRequestType()
     },
     methods: {
         resetValidation () {
@@ -180,8 +180,8 @@ export default {
                 this.customers = res
             }
         },
-        async getRequestTypes () {
-            const req = await fetch(process.env.HOST_BACK+'/getRequestTypes/?'+ new URLSearchParams({
+        async getRequestType () {
+            const req = await fetch(process.env.HOST_BACK+'/getRequestType/?'+ new URLSearchParams({
                 company: localStorage.getItem('company'),
                 token: localStorage.getItem('refresh')
             }),{
