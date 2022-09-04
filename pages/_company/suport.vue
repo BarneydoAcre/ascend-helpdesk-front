@@ -24,9 +24,6 @@ export default {
     },
     methods: {
     },
-    created () {
-        this.$vuetify.theme.dark = false
-    },
 }
 </script>
 

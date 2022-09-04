@@ -1,71 +1,74 @@
 <template>
     <div class="login-register">
-        <div class="login-register-background">
-            <div v-if="statusLogin" class="login-register-button">
-                <a :href="$route.path+'#login-form'" @click="logout()" class="login">Sair</a>
-            </div>
-            <div v-else class="login-register-button">
-                <a :href="$route.path+'#login-form'" class="login">Entre</a>
-                <p>|</p>
-                <a :href="$route.path+'#register-form'" class="signup">Registre-se</a>
-            </div>
+        <v-card>
 
-
-            <form id="login-form" class="modal">
-                <p class="form-title">Bem vindo ao Helpdesk</p>
-                <div class="input-field">
-                    <label for="">Email</label>
-                    <input type="email" name="email" v-model="email">
+            <div class="login-register-background">
+                <div v-if="statusLogin" class="login-register-button">
+                    <a :href="$route.path+'#login-form'" @click="logout()" class="login">Sair</a>
                 </div>
-                <div class="input-field">
-                    <div class="input-field-pass-label">
-                        <label>Senha</label>
-                        <a href="/accounts/restore-password/">Esqueceu sua senha?</a>
+                <div v-else class="login-register-button">
+                    <a :href="$route.path+'#login-form'" class="login">Entre</a>
+                    <p>|</p>
+                    <a :href="$route.path+'#register-form'" class="signup">Registre-se</a>
+                </div>
+
+
+                <form id="login-form" class="modal">
+                    <p class="form-title">Bem vindo ao Helpdesk</p>
+                    <div class="input-field">
+                        <label for="">Email</label>
+                        <input type="email" name="email" v-model="email">
                     </div>
-                    <input type="password" name="password" v-model="password">
-                </div>
-                <div class="input-field" style="flex-direction: row; justify-content: flex-start; align-items: center;">
-                    <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider"></span>
-                    </label>
-                    <label for="">Lembrar de mim?</label>
-                </div>
-                <button class="button" @click="login($event)">Entrar</button>
-            </form>
+                    <div class="input-field">
+                        <div class="input-field-pass-label">
+                            <label>Senha</label>
+                            <a href="/accounts/restore-password/">Esqueceu sua senha?</a>
+                        </div>
+                        <input type="password" name="password" v-model="password">
+                    </div>
+                    <div class="input-field" style="flex-direction: row; justify-content: flex-start; align-items: center;">
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                        <label for="">Lembrar de mim?</label>
+                    </div>
+                    <v-btn @click="login($event)">Entrar</v-btn>
+                </form>
 
 
-            <form id="register-form" class="modal">
-                <p class="form-title">Registre-se aqui!</p>
-                <div class="input-field">
-                    <label for="">Nome de usuário</label>
-                    <input type="email" v-model="username">
-                </div>
-                <div class="input-field">
-                    <label for="">Email</label>
-                    <input type="email" v-model="email">
-                </div>
-                <div class="input-field">
-                    <label>Senha</label>
-                    <input type="password" v-model="pass1">
-                </div>
-                <div class="input-field">
-                    <label>Repita a senha</label>
-                    <input type="password" v-model="pass2">
-                </div>
-                <button class="button">Registrar</button>
-            </form>
+                <form id="register-form" class="modal">
+                    <p class="form-title">Registre-se aqui!</p>
+                    <div class="input-field">
+                        <label for="">Nome de usuário</label>
+                        <input type="email" v-model="username">
+                    </div>
+                    <div class="input-field">
+                        <label for="">Email</label>
+                        <input type="email" v-model="email">
+                    </div>
+                    <div class="input-field">
+                        <label>Senha</label>
+                        <input type="password" v-model="pass1">
+                    </div>
+                    <div class="input-field">
+                        <label>Repita a senha</label>
+                        <input type="password" v-model="pass2">
+                    </div>
+                    <button class="button">Registrar</button>
+                </form>
 
 
-            <form id="company-form" class="modal">
-                <p class="form-title" style="text-align: center;">Escolha sua empresa!</p>
-                <div class="select-company">
-                    <a v-for="d,i in data" :key="i" :href="'/'+d.slug+'/dashboard/'" @click="setCompany(d.company_id)">{{ d.company}}</a>
-                </div>
-            </form>
-
-
-        </div>
+                <form id="company-form" class="modal">
+                    <p class="form-title" style="text-align: center;">Escolha sua empresa!</p>
+                    <div class="select-company">
+                        <v-btn v-for="d,i in data" :key="i" :href="'/'+d.slug+'/dashboard/'" @click="setCompany(d.company_id)">{{ d.company}}</v-btn>
+                    </div>
+                </form>
+                
+                
+            </div>
+        </v-card>
     </div>
 </template>
 
@@ -160,6 +163,9 @@ export default {
 </script>
 
 <style>
+input {
+    font-size: 14px;
+} 
 .modal {
     z-index: 99999;
     opacity:0;
@@ -169,20 +175,6 @@ export default {
 .modal:target {
   opacity: 1;
   pointer-events: auto;
-}
-.button {
-    border-radius: 1.5vh;
-    border: unset;
-    padding: 1vh 2vw;
-    width: 10vw;
-    border: 2px solid var(--textColor);
-    background: var(--textColor);
-    color: var(--baseColor);
-    transition: background 1s;
-}
-.button:hover {
-    color: var(--textColor);
-    background: var(--baseColor);
 }
 .input-field {
     display: flex;
@@ -198,7 +190,6 @@ export default {
     margin: 0 5% 0 5%;
     border: unset;
     border-radius: .5vh;
-    background: var(--lightColor);
 }
 .input-field label {
     font-size: 1.8vh;
@@ -208,7 +199,7 @@ export default {
     margin: 0;
 }
 .input-field-pass-label a {
-    color: var(--alert);
+    color: rgb(218, 207, 0);
     font-weight: bold;
     font-size: 1.5vh;
 }
@@ -255,6 +246,7 @@ export default {
 }
 .form-title {
     width: 75%;
+    font-size: 18px;
     font-weight: bold;
     margin: 4vh 0 4vh 0;
 }
@@ -308,11 +300,11 @@ export default {
  transition: .4s;
 }
 input:checked + .slider {
- background-color: var(--textColorShadow);
+ background-color: #2c007e;
 }
 
 input:focus + .slider {
- box-shadow: 0 0 1px var(--textColorShadow);
+ box-shadow: 0 0 1px #2c007e;
 }
 
 input:checked + .slider:before {
