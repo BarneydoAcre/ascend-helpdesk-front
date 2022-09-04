@@ -17,14 +17,14 @@
                     <p class="form-title">Bem vindo ao Helpdesk</p>
                     <div class="input-field">
                         <label for="">Email</label>
-                        <input type="email" name="email" v-model="email">
+                        <input type="email" v-model="formLogin.email">
                     </div>
                     <div class="input-field">
                         <div class="input-field-pass-label">
                             <label>Senha</label>
                             <a href="/accounts/restore-password/">Esqueceu sua senha?</a>
                         </div>
-                        <input type="password" name="password" v-model="password">
+                        <input type="password" v-model="formLogin.password">
                     </div>
                     <div class="input-field" style="flex-direction: row; justify-content: flex-start; align-items: center;">
                         <label class="switch">
@@ -36,33 +36,35 @@
                     <v-btn @click="login($event)">Entrar</v-btn>
                 </form>
 
-
-                <form id="register-form" class="modal">
+                <div id="register-form" class="modal">
                     <p class="form-title">Registre-se aqui!</p>
-                    <div class="input-field">
-                        <label for="">Nome de usuário</label>
-                        <input type="email" v-model="username">
-                    </div>
-                    <div class="input-field">
-                        <label for="">Email</label>
-                        <input type="email" v-model="email">
-                    </div>
-                    <div class="input-field">
-                        <label>Senha</label>
-                        <input type="password" v-model="pass1">
-                    </div>
-                    <div class="input-field">
-                        <label>Repita a senha</label>
-                        <input type="password" v-model="pass2">
-                    </div>
-                    <button class="button">Registrar</button>
-                </form>
+                    <v-form dense v-model="valid" ref="form" lazy-validation class="pl-10 pr-10">
+                        <v-row dense>
+                            <v-col cols="12">
+                                <v-text-field dense label="Email" v-model="formRegister.email"></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-text-field dense label="Primeiro Nome" v-model="formRegister.first_name"></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-text-field dense label="Último Nome" v-model="formRegister.last_name"></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-text-field dense label="Telefone ou Celular" v-model="formRegister.phone_number"></v-text-field>
+                            </v-col>
+                            <v-col cols="12" class="d-flex justify-center">
+                                <v-btn class="button" @click="register">Registrar</v-btn>
+                            </v-col>
+                        </v-row>
+                    </v-form>
+                    <v-alert v-if="messageRegister" dismissible color="green">{{ messageRegister }}</v-alert>
+                </div>
 
 
                 <form id="company-form" class="modal">
                     <p class="form-title" style="text-align: center;">Escolha sua empresa!</p>
                     <div class="select-company">
-                        <v-btn v-for="d,i in data" :key="i" :href="'/'+d.slug+'/dashboard/'" @click="setCompany(d.company_id)">{{ d.company}}</v-btn>
+                        <v-btn v-for="d,i in companys" :key="i" :href="'/'+d.slug+'/dashboard/'" @click="setCompany(d.company_id)">{{ d.company}}</v-btn>
                     </div>
                 </form>
                 
@@ -79,16 +81,26 @@ export default {
     },
     data () {
         return {
-            data: null,
+            valid: false,
+            messageRegister: null,
+            companys: [],
             statusLogin: false,
-            username: '',
-            email: '',
-            password: '',
-            pass1: '',
-            pass2: '',
+            formLogin: {
+                email: '',
+                password: '',
+            },
+            formRegister: {
+                email: '',
+                first_name: '',
+                last_name: '',
+                phone_number: '',
+            },
         }
     },
     methods: {
+        reset () {
+            this.$refs.form.reset()
+        },
         async verifyLogin () {
             let token = {
                 token: localStorage.getItem('refresh')
@@ -109,14 +121,10 @@ export default {
         
         async login(e) {
             e.preventDefault()
-            let data = {
-                email: this.email,
-                password: this.password
-            }
             // const req = await fetch(process.env.HOST_BACK+'/jwt/create/', {
             const req = await fetch(process.env.HOST_BACK+'/auth/login/', {
                 method: 'POST',
-                body: JSON.stringify(data),
+                body: JSON.stringify(formLogin),
                 headers: {'Content-Type': 'application/json'}
             })
             const res = await req.json()
@@ -135,6 +143,17 @@ export default {
                 this.password = ''
             }
         },
+        async register () {
+            const req = await fetch(process.env.HOST_BACK+'/auth/register/', {
+                method: 'POST',
+                body: JSON.stringify(this.formRegister),
+                headers: {'Content-Type': 'application/json'},
+            })
+            if (req.status == 200) {
+                this.messageRegister = "Seus dados foram enviados!"
+                this.reset()
+            }
+        },
         logout () {
             localStorage.setItem('access', '')
             localStorage.setItem('refresh', '')
@@ -150,7 +169,7 @@ export default {
                 method: 'GET'
             })
             const res = await req.json()
-            this.data = res
+            this.companys = res
         },
         setCompany (id) {
             localStorage.setItem('company', id)
@@ -163,9 +182,6 @@ export default {
 </script>
 
 <style>
-input {
-    font-size: 14px;
-} 
 .modal {
     z-index: 99999;
     opacity:0;
