@@ -129,7 +129,6 @@ export default {
             let token = {
                 token: localStorage.getItem("refresh")
             };
-            console.log(process.env.HOST_BACK,"/auth/jwt/verify/")
             const req = await fetch(process.env.HOST_BACK+"/auth/jwt/verify/", {
                 method: "POST",
                 body: JSON.stringify(token),

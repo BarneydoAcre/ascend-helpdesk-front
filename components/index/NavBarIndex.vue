@@ -5,7 +5,7 @@
             <NuxtLink to="/services/" class="navbar-services navbar-button">Serviços</NuxtLink>
             <NuxtLink to="/team/" class="navbar-team navbar-button">Equipe</NuxtLink>
             <div class="navbar-logo">
-                <img src="/logo.png">
+                <img src="/logo.svg">
             </div>
         </div>
     </div>
