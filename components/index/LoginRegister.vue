@@ -17,14 +17,14 @@
                     <p class="form-title">Bem vindo ao Helpdesk</p>
                     <div class="input-field">
                         <label for="">Email</label>
-                        <input type="email" v-model="formLogin.email">
+                        <input type="email" style="background: #d8d8d8;" v-model="formLogin.email">
                     </div>
                     <div class="input-field">
                         <div class="input-field-pass-label">
                             <label>Senha</label>
                             <a href="/accounts/restore-password/">Esqueceu sua senha?</a>
                         </div>
-                        <input type="password" v-model="formLogin.password">
+                        <input type="password" style="background: #d8d8d8;" v-model="formLogin.password">
                     </div>
                     <div class="input-field" style="flex-direction: row; justify-content: flex-start; align-items: center;">
                         <label class="switch">
