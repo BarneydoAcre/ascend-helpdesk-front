@@ -110,10 +110,10 @@ export default {
                 email: this.email,
                 password: this.password
             }
+            console.log(process.env.HOST_BACK+'/auth/login/', process.env.HOST_BACK, '/auth/login/')
             // const req = await fetch(process.env.HOST_BACK+'/jwt/create/', {
             const req = await fetch(process.env.HOST_BACK+'/auth/login/', {
                 method: 'POST',
-                // body: JSON.stringify(data),
                 body: JSON.stringify(data),
                 headers: {'Content-Type': 'application/json'}
             })
