@@ -48,7 +48,7 @@
                                     <v-text-field disabled filled dense label="Rotina" v-model="editedItem.routine"></v-text-field>
                                 </v-col>
                                 <v-col cols="12">
-                                    <v-select disabled filled dense label="Status" v-model="editedItem.status_id" :items="status" item-text="status_name" item-value="status_id"></v-select>
+                                    <v-select filled dense label="Status" @blur="updateTicketStatus(editedItem.id)" v-model="editedItem.status_id" :items="status" item-text="status_name" item-value="status_id"></v-select>
                                 </v-col>
                                 <v-col cols="12">
                                     <v-textarea disabled filled dense rows="3" label="Comentário" v-model="editedItem.description_problem"></v-textarea>
@@ -209,6 +209,20 @@ export default {
             if (req.status == 200) {
                 this.$emit('getTickets')
                 this.dialog = false
+            }
+        },
+        async updateTicketStatus (ticket) {
+            const req = await fetch(process.env.HOST_BACK+'/updateTicketStatus/', {
+                method: 'POST',
+                body: JSON.stringify({
+                    ticket: ticket,
+                    company: localStorage.getItem('company'),
+                    status_id: this.editedItem.status_id
+                }),
+                headers: {'Content-Type': 'application/json'},
+            })
+            if (req.status == 200) {
+                this.$emit('getTickets')
             }
         },
     }

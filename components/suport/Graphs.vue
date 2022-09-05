@@ -9,28 +9,28 @@
 <script>
 export default {
     name: 'Graphs',
-    head() {
-        return {
-            script: [
-                {src: 'https://cdn.jsdelivr.net/npm/chart.js'},
-                {src: "https://code.highcharts.com/highcharts.js",body: true},
-                {src: "https://code.highcharts.com/modules/accessibility.js",body: true},
-            ],
-        }
-    },
+    // head() {
+    //     return {
+    //         script: [
+    //             {src: 'https://cdn.jsdelivr.net/npm/chart.js'},
+    //             {src: "https://code.highcharts.com/highcharts.js",body: true},
+    //             {src: "https://code.highcharts.com/modules/accessibility.js",body: true},
+    //         ],
+    //     }
+    // },
     methods: {
-        async fluxoDeCaixa () {
-            const req = await fetch(this.hostBack+'/fluxo_de_caixa')
-            const res = await req.json()
+        // async fluxoDeCaixa () {
+        //     const req = await fetch(this.hostBack+'/fluxo_de_caixa')
+        //     const res = await req.json()
 
-            const total_vendas_mensal_chart = Highcharts.chart('fluxo_20_dias_chart', {
-                plotOptions: {
+            // const total_vendas_mensal_chart = Highcharts.chart('fluxo_20_dias_chart', {
+            //     plotOptions: {
             //         series: {
             //             // general options for all series
             //         },
             //         spline: {
             //         },
-                },
+                // },
             //     chart: {
             //         height: parseInt(window.screen.height)*0.32
             //     },
@@ -39,8 +39,8 @@ export default {
             //     },
             //     xAxis: {
             //     }
-            })
-        }
+            // })
+        // }
     }
 }
 </script>

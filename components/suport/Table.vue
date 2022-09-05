@@ -2,7 +2,7 @@
     <div id="main-suport-table">
         <v-data-table :headers="headers" :items="tickets" hide-default-footer class="elevation-1">
             <template v-slot:item.actions="{ item }">
-                <EditTicket ref="editTicket" :item="item" @editItem="editItem"></EditTicket>
+                <EditTicket ref="editTicket" :item="item" @getTickets="getTickets" @editItem="editItem"></EditTicket>
                 <DeleteTicket :item="item" @getTickets="getTickets"></DeleteTicket>
             </template>
         </v-data-table>
