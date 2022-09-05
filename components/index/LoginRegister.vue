@@ -124,7 +124,7 @@ export default {
             // const req = await fetch(process.env.HOST_BACK+'/jwt/create/', {
             const req = await fetch(process.env.HOST_BACK+'/auth/login/', {
                 method: 'POST',
-                body: JSON.stringify(formLogin),
+                body: JSON.stringify(this.formLogin),
                 headers: {'Content-Type': 'application/json'}
             })
             const res = await req.json()
