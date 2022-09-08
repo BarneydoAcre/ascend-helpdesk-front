@@ -16,19 +16,25 @@
                 <v-form v-model="valid" ref="form" lazy-validation>
                     <v-row dense>
                         <v-col cols="8">
-                            <v-text-field dense filled label="Nome do Produto" v-model="form.name"></v-text-field>
+                            <v-text-field dense filled label="Nome do Produto" v-model="form.name" :rules="rules"></v-text-field>
+                        </v-col>
+                        <v-col cols="3">
+                            <v-select dense filled label="Marca" v-model="form.brand" :rules="rules" :items="brands" item-text="brand_name" item-value="brand_id"></v-select>
+                        </v-col>
+                        <v-col cols="1">
+                            <AddBrand @getBrand="getBrand"></AddBrand>
+                        </v-col>
+                        <v-col cols="3">
+                            <v-select dense filled label="Und. Medida" v-model="form.measure" :rules="rules" :items="measures" item-text="measure_name" item-value="measure_id"></v-select>
+                        </v-col>
+                        <v-col cols="1">
+                            <AddMeasure @getMeasure="getMeasure"></AddMeasure>
                         </v-col>
                         <v-col cols="4">
-                            <v-select dense filled label="Marca" v-model="form.brand" :items="brands" item-text="brand_name" item-value="brand_id"></v-select>
+                            <v-text-field dense filled label="Qtd. Atual" v-model="form.stock" :rules="rules"></v-text-field>
                         </v-col>
                         <v-col cols="4">
-                            <v-select dense filled label="Und. Medida" v-model="form.measure" :items="measures" item-text="measure_name" item-value="measure_id"></v-select>
-                        </v-col>
-                        <v-col cols="4">
-                            <v-text-field dense filled label="Qtd. Atual" v-model="form.stock"></v-text-field>
-                        </v-col>
-                        <v-col cols="4">
-                            <v-text-field dense filled label="Custo" v-model="form.cost"></v-text-field>
+                            <v-text-field dense filled label="Custo" v-model="form.cost" :rules="rules"></v-text-field>
                         </v-col>
                         <v-col cols="12" class="d-flex justify-center align-center">
                             <v-btn color="success" class="mr-4" @click="addProduct">
@@ -47,70 +53,84 @@
 </template>
 
 <script>
+import AddBrand from './AddBrand.vue'
+import AddMeasure from './AddMeasure.vue';
 export default {
     name: "AddProduct",
-    emits: ['getProducts'],
-    data () {
+    components: {
+    AddBrand,
+    AddMeasure
+},
+    emits: ["getProducts"],
+    data() {
         return {
             dialog: false,
             valid: false,
             form: {
-                company: localStorage.getItem('company'),
-                company_worker: localStorage.getItem('user_id'), 
-                name: null, 
+                company: localStorage.getItem("company"),
+                company_worker: localStorage.getItem("user_id"),
+                name: null,
                 brand: null,
                 measure: null,
                 stock: null,
                 cost: null,
             },
+            rules: [
+                v => !!v || "Obrigatório",
+            ],
             brands: [],
             measures: []
+        };
+    },
+    mounted() {
+        this.getBrand();
+        this.getMeasure();
+    },
+    methods: {
+        reset() {
+            this.$refs.form.reset();
+        },
+        validate() {
+            this.$refs.form.validate();
+        },
+        addProduct() {
+            this.validate();
+            setTimeout(async () => {
+                if (this.valid != false) {
+                    const req = await fetch(process.env.HOST_BACK + "/foodservice/addProduct/", {
+                        method: "POST",
+                        body: JSON.stringify(this.form),
+                        headers: { "Content-Type": "application/json" },
+                    });
+                    if (req.status == 200) {
+                        this.dialog = false;
+                        this.$emit("getProducts");
+                    }
+                    else {
+                    }
+                }
+            }, 0);
+        },
+        async getBrand() {
+            const req = await fetch(process.env.HOST_BACK + "/foodservice/getBrand/?" + new URLSearchParams({
+                token: localStorage.getItem("refresh"),
+                company: localStorage.getItem("company"),
+            }), {
+                method: "GET",
+            });
+            const res = await req.json();
+            this.brands = res;
+        },
+        async getMeasure() {
+            const req = await fetch(process.env.HOST_BACK + "/foodservice/getMeasure/?" + new URLSearchParams({
+                token: localStorage.getItem("refresh"),
+                company: localStorage.getItem("company"),
+            }), {
+                method: "GET",
+            });
+            const res = await req.json();
+            this.measures = res;
         }
     },
-    mounted () {
-        this.getBrand()
-        this.getMeasure()
-    },  
-    methods: {
-        reset () {
-            this.$refs.form.reset()
-        },
-        validate () {
-            this.$refs.form.validate()
-        },
-        async addProduct () {
-            const req = await fetch(process.env.HOST_BACK+'/foodservice/addProduct/',{
-                method: "POST",
-                body: JSON.stringify(this.form),
-                headers: {'Content-Type': 'application/json'},
-            })
-
-            if (req.status == 200) {
-                this.dialog = false
-                this.$emit('getProducts')
-            }else {
-            }
-        },
-        async getBrand () {
-            const req = await fetch(process.env.HOST_BACK+'/foodservice/getBrand/?'+new URLSearchParams({
-                token: localStorage.getItem('refresh'),
-                company: localStorage.getItem('company'),
-            }), {
-                method: "GET",
-            })
-            const res = await req.json()
-            this.brands = res
-        },
-        async getMeasure () {
-            const req = await fetch(process.env.HOST_BACK+'/foodservice/getMeasure/?'+new URLSearchParams({
-                token: localStorage.getItem('refresh'),
-                company: localStorage.getItem('company'),
-            }), {
-                method: "GET",
-            })
-            const res = await req.json()
-            this.measures = res
-        }
-    }
 }
 </script>

@@ -26,7 +26,6 @@ export default {
     },
     methods: {
         editProduct () {
-            console.log('teste')
         },
         async getProducts () {
             const req = await fetch(process.env.HOST_BACK+'/foodservice/getProduct/?'+new URLSearchParams({
@@ -36,7 +35,6 @@ export default {
                 method: "GET",
             })
             const res = await req.json()
-            console.log(res)
             this.products = res
         }
     }
