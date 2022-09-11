@@ -1,8 +1,8 @@
 <template>
     <div class="main-foodservice-actions">
         <v-card height="100%" class="d-flex justify-space-around align-center">
-            <AddProduct @getProducts="$emit('getProducts')"></AddProduct>
-            <AddMontage></AddMontage>
+            <AddProduct @getProduct="$emit('getProduct')"></AddProduct>
+            <AddProductSale></AddProductSale>
         </v-card>
     </div>
     
@@ -10,13 +10,13 @@
 
 <script>
 import AddProduct from './actions/AddProduct.vue';
-import AddMontage from './actions/AddMontage.vue';
+import AddProductSale from './actions/AddProductSale.vue';
 export default {
     name: "Actions",
     emits: ['getProducts',],
     components: {
     AddProduct,
-    AddMontage
+    AddProductSale
 },
 }
 </script>

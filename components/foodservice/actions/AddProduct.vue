@@ -61,7 +61,7 @@ export default {
     AddBrand,
     AddMeasure
 },
-    emits: ["getProducts"],
+    emits: ["getProduct"],
     data() {
         return {
             dialog: false,
@@ -69,6 +69,7 @@ export default {
             form: {
                 company: localStorage.getItem("company"),
                 company_worker: localStorage.getItem("user_id"),
+                type: 1,
                 name: null,
                 brand: null,
                 measure: null,
@@ -104,7 +105,7 @@ export default {
                     });
                     if (req.status == 200) {
                         this.dialog = false;
-                        this.$emit("getProducts");
+                        this.$emit("getProduct");
                     }
                     else {
                     }
