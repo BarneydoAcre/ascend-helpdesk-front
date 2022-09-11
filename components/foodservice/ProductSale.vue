@@ -43,7 +43,6 @@ export default {
             const res = await req.json()
             this.products = res
             this.loadingTable = false
-            console.log(res)
         }
     }
 }

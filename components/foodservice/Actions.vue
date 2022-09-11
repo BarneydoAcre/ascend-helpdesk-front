@@ -2,7 +2,7 @@
     <div class="main-foodservice-actions">
         <v-card height="100%" class="d-flex justify-space-around align-center">
             <AddProduct @getProduct="$emit('getProduct')"></AddProduct>
-            <AddProductSale></AddProductSale>
+            <AddProductSale @getProductSale="$emit('getProductSale')"></AddProductSale>
         </v-card>
     </div>
     

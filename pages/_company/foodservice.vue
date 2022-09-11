@@ -1,6 +1,6 @@
 <template>
     <div class="main-foodservice">
-        <Actions @getProduct="$refs.product.getProduct()"></Actions>
+        <Actions @getProduct="$refs.product.getProduct()" @getProductSale="$refs.productsale.getProductsSale()"></Actions>
         <Product ref="product"></Product>
         <ProductSale ref="productsale"></ProductSale>
         <Sale></Sale>

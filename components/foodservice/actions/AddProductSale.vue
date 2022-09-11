@@ -15,8 +15,11 @@
             <v-card-text>
                 <v-form ref="form" lazy-validation>
                     <v-row dense>
-                        <v-col cols="12">
+                        <v-col cols="9">
                             <v-text-field dense filled label="Nome do Produto" v-model="formProduct.name"></v-text-field>
+                        </v-col>
+                        <v-col cols="3">
+                            <v-text-field dense filled label="Preço" v-model="formProduct.price"></v-text-field>
                         </v-col>
                         <v-col cols="12">
                             <h3>Componentes</h3>
@@ -60,6 +63,7 @@
 <script>
 export default {
     name: "AddProductSale",
+    emits: ["getProductSale",],
     data () {
         return {
             component: null,
@@ -69,6 +73,7 @@ export default {
                 company: localStorage.getItem("company"),
                 company_worker: localStorage.getItem("user_id"),
                 name: null,
+                price: null,
                 type: 2,
             },
             formProductItems: {
@@ -87,6 +92,7 @@ export default {
                 },
                 { text: "Produto", value: "name" },
                 { text: "Qtde.", value: "quantity" },
+                { text: "Preço", value: "cost" },
                 { text: "Ações", value: "actions" },
             ],
         }
@@ -116,6 +122,7 @@ export default {
             })
             if (req.status == 200) {
                 this.dialog = false
+                this.$emit('getProductSale')
             }
         },
         addItem () {
