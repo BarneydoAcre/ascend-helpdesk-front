@@ -20,6 +20,7 @@ export default {
                 { text: 'Produto', value: 'name' },
                 { text: 'Marca', value: 'brand' },
                 { text: 'Custo', value: 'cost' },
+                { text: 'Qtde.', value: 'stock' },
                 { text: 'Ações', value: 'actions' },
             ]
         }
