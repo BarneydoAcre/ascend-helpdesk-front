@@ -3,6 +3,7 @@
         <Actions @getProduct="$refs.product.getProduct()"></Actions>
         <Product ref="product"></Product>
         <ProductSale ref="productsale"></ProductSale>
+        <Sale></Sale>
     </div>
 </template>
 
@@ -10,12 +11,14 @@
 import Actions from "../../components/foodservice/Actions.vue";
 import Product from "../../components/foodservice/Product.vue";
 import ProductSale from "../../components/foodservice/ProductSale.vue";
+import Sale from "../../components/foodservice/Sale.vue";
 export default {
     name: "FoodService",
     components: {
     Product,
     Actions,
-    ProductSale
+    ProductSale,
+    Sale
 },
     data() {
         return {
@@ -31,11 +34,11 @@ export default {
 .main-foodservice {
     display: grid;
     grid-template-columns: 25% 25% 20% 20% 10%;
-    grid-template-rows: 9vh 29vh 9vh 19vh 29vh;
+    grid-template-rows: 9vh 29vh 14.5vh 14.5vh 29vh;
     grid-template-areas: 'actions actions graphs graphs graphs'
-                         'product productsale none none none'
-                         'product productsale table table table'
-                         'product productsale table table table'
-                         'product productsale table table table';
+                         'product product sale sale sale'
+                         'product product sale sale sale'
+                         'productsale productsale sale sale sale'
+                         'productsale productsale sale sale sale';
 }
 </style>

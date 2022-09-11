@@ -1,10 +1,6 @@
 <template>
     <div class="main-foodservice-product">
-        <v-card min-height="100%">
-            <v-card-text v-for="p, i in products" :key="i">
-                <EditProduct :product="p"></EditProduct>
-            </v-card-text>
-        </v-card>
+        <v-data-table fixed-header height="42vh" :loading="loadingTable" :headers="headers" :items="products" hide-default-footer class="elevation-1"></v-data-table>
     </div>
 </template>
 
@@ -17,8 +13,15 @@ export default {
     },
     data () {
         return {
-            form: {},
+            loadingTable: false,
             products: [],
+            headers: [
+                { text: 'ID', justify: 'center', align: 'center', value: 'id' },
+                { text: 'Produto', value: 'name' },
+                { text: 'Marca', value: 'brand' },
+                { text: 'Custo', value: 'cost' },
+                { text: 'Ações', value: 'actions' },
+            ]
         }
     },
     mounted () {
@@ -28,6 +31,7 @@ export default {
         editProduct () {
         },
         async getProduct () {
+            this.loadingTable = true
             const req = await fetch(process.env.HOST_BACK+'/foodservice/getProduct/?'+new URLSearchParams({
                 token: localStorage.getItem('refresh'),
                 company: localStorage.getItem('company'),
@@ -36,6 +40,7 @@ export default {
                 method: "GET",
             })
             const res = await req.json()
+            this.loadingTable = false
             this.products = res
         }
     }
@@ -46,7 +51,6 @@ export default {
 .main-foodservice-product {
     grid-area: product;
 
-    overflow-y: auto;
-    padding: 1vh 1vh 0 0;
+    padding: 1vh 1vh 1vh 0;
 }
 </style>
