@@ -18,9 +18,9 @@ export default {
             products: [],
             headers: [
                 { text: "ID", align: "center", justify: "center", value: "id" },
-                { text: "Produto", value: "name" },
-                { text: "Preço", value: "price" },
-                { text: "Ações", value: "actions" },
+                { text: "Produto", align: "center", justify: "center", value: "name" },
+                { text: "Preço", align: "center", justify: "center", value: "price" },
+                { text: "Ações", align: "center", justify: "center", value: "actions" },
             ],
         }
     },

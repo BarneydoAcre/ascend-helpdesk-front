@@ -25,7 +25,7 @@
                             <h3>Componentes</h3>
                         </v-col>
                         <v-col cols="7">
-                            <v-select dense filled label="Componente" v-model="component" :items="products" item-text="name" item-value="id"></v-select>
+                            <v-select dense filled label="Componente" v-model="component" @click="getProduct" :items="products" item-text="name" item-value="id"></v-select>
                         </v-col>
                         <v-col cols="3">
                             <v-text-field dense filled label="Qtde." v-model="quantity"></v-text-field>
@@ -98,7 +98,6 @@ export default {
         }
     },
     mounted () {
-        this.getProduct()
     },
     methods: {
         async addProductSale () {

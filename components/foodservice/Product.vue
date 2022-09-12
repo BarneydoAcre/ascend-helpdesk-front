@@ -17,11 +17,11 @@ export default {
             products: [],
             headers: [
                 { text: 'ID', justify: 'center', align: 'center', value: 'id' },
-                { text: 'Produto', value: 'name' },
-                { text: 'Marca', value: 'brand' },
-                { text: 'Custo', value: 'cost' },
-                { text: 'Qtde.', value: 'stock' },
-                { text: 'Ações', value: 'actions' },
+                { text: 'Produto', align: "center", justify: "center", value: 'name' },
+                { text: 'Marca', align: "center", justify: "center", value: 'brand' },
+                { text: 'Custo', align: "center", justify: "center", value: 'cost' },
+                { text: 'Qtde.', align: "center", justify: "center", value: 'stock' },
+                { text: 'Ações', align: "center", justify: "center", value: 'actions' },
             ]
         }
     },
