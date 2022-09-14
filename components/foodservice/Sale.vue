@@ -20,16 +20,26 @@
                 </v-form>
             </v-card-text>
             <v-card-text style="grid-area: table;">
-                <v-data-table :headers="headers" :items="form.product" hide-default-footer class="elevation-1"></v-data-table>
+                <v-data-table :headers="headers" :items="formItems.products" hide-default-footer class="elevation-1"></v-data-table>
             </v-card-text>
             <v-card-text style="grid-area: actions;" class="d-flex flex-column justify-start align-center">
-                <v-btn fab small color="success" class="mb-4">
+                <v-btn fab small color="success" class="mb-4" @click="addSale">
                     <v-icon>mdi-check</v-icon>
                 </v-btn>
                 <v-btn fab small color="primary">
                     <v-icon>mdi-printer</v-icon>
                 </v-btn>
             </v-card-text>
+            <v-card-actions style="grid-area: info;">
+                <v-row dense class="d-flex align-center">
+                    <v-col cols="3">
+                        <v-checkbox dense filled label="Frete?" v-model="form.delivery"></v-checkbox>
+                    </v-col>
+                    <v-col cols="4">
+                        <v-text-field dense label="Valor" type="number" v-model="form.delivery_cost"></v-text-field>
+                    </v-col>
+                </v-row>
+            </v-card-actions>
         </v-card>
     </div>
     
@@ -50,7 +60,16 @@ export default {
             form: {
                 company: localStorage.getItem("company"),
                 company_worker: localStorage.getItem("user_id"),
-                product: [],
+                value: 0.0,
+                delivery: false,
+                delivery_cost: 0,
+                total: 0.0,
+            },
+            formItems: {
+                company: localStorage.getItem("company"),
+                company_worker: localStorage.getItem("user_id"),
+                sale: null,
+                products: [],
             },
             headers: [
                 { 
@@ -93,20 +112,45 @@ export default {
         },
         addItem () {
             let objItem = null
-            if (this.form.product.filter((i) => {return i.id == this.product}).length == 0) {
+            if (this.formItems.products.filter((i) => {return i.id == this.product}).length == 0) {
                 objItem = this.products.filter((i) => {return i.id == this.product})[0]
                 objItem["quantity"] = this.quantity
-                this.form.product.push(objItem)
+                this.formItems.products.push(objItem)
             }
         },
         delItem (item) {
-            this.formProductItems.items = this.formProductItems.items.filter((i) => {return i.id != item.id}).length == 0
+            this.formItems.products = this.formItems.products.filter((i) => {return i.id != item.id}).length == 0
         },
+        async addSale () {
+            for (let i = 0; this.formItems.products.length > i; i++) {
+                this.form.value = parseFloat(this.form.value) + parseFloat(this.formItems.products[i].price)
+            }
+            this.form.total = this.form.value + this.form.delivery_cost
+            const req = await fetch(process.env.HOST_BACK+"/foodservice/addSale/", {
+                method: "POST",
+                body: JSON.stringify(this.form),
+                headers: { "Content-Type": "application/json" }
+            })
+            this.formItems.sale = await req.json()
+            if (req.status == 200) {
+                this.addSaleItems()
+            }
+        },
+        async addSaleItems () {
+            const req = await fetch(process.env.HOST_BACK+"/foodservice/addSaleItems/", {
+                method: "POST",
+                body: JSON.stringify(this.formItems),
+                headers: { "Content-Type": "application/json" }
+            })
+            if (req.status == 200) {
+                console.log('ok')
+            }
+        }
     }
 }
 </script>
 
-<style>
+<style scoped>
 .main-foodservice-sale {
     grid-area: sale;
 
@@ -119,6 +163,6 @@ export default {
     grid-template-areas: 'title title' 
                          'input actions'
                          'table actions'
-                         'table none';
+                         'info none';
 }
 </style>

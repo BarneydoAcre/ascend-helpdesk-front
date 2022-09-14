@@ -19,6 +19,7 @@ export default {
             headers: [
                 { text: "ID", align: "center", justify: "center", value: "id" },
                 { text: "Produto", align: "center", justify: "center", value: "name" },
+                { text: "Custo", align: "center", justify: "center", value: "cost" },
                 { text: "Preço", align: "center", justify: "center", value: "price" },
                 { text: "Ações", align: "center", justify: "center", value: "actions" },
             ],

@@ -19,13 +19,13 @@
                             <v-text-field dense filled label="Nome do Produto" v-model="form.name" :rules="rules"></v-text-field>
                         </v-col>
                         <v-col cols="3">
-                            <v-select dense filled label="Marca" v-model="form.brand" :rules="rules" :items="brands" item-text="brand_name" item-value="brand_id"></v-select>
+                            <v-select dense filled label="Marca" @focus="getBrand" v-model="form.brand" :rules="rules" :items="brands" item-text="brand_name" item-value="brand_id"></v-select>
                         </v-col>
                         <v-col cols="1">
                             <AddBrand @getBrand="getBrand"></AddBrand>
                         </v-col>
                         <v-col cols="3">
-                            <v-select dense filled label="Und. Medida" v-model="form.measure" :rules="rules" :items="measures" item-text="measure_name" item-value="measure_id"></v-select>
+                            <v-select dense filled label="Und. Medida" @focus="getMeasure" v-model="form.measure" :rules="rules" :items="measures" item-text="measure_name" item-value="measure_id"></v-select>
                         </v-col>
                         <v-col cols="1">
                             <AddMeasure @getMeasure="getMeasure"></AddMeasure>
@@ -84,8 +84,6 @@ export default {
         };
     },
     mounted() {
-        this.getBrand();
-        this.getMeasure();
     },
     methods: {
         reset() {
@@ -93,6 +91,9 @@ export default {
         },
         validate() {
             this.$refs.form.validate();
+        },
+        reset () {
+            this.$refs.form.reset();
         },
         addProduct() {
             this.validate();
@@ -106,6 +107,7 @@ export default {
                     if (req.status == 200) {
                         this.dialog = false;
                         this.$emit("getProduct");
+                        this.reset()
                     }
                     else {
                     }
