@@ -48,6 +48,7 @@
 <script>
 export default {
     name: "Sale",
+    emits: ['getProduct'],
     components: {
     },
     data () {
@@ -97,6 +98,10 @@ export default {
                 }
             }, 0)
         },
+        reset () {
+            this.$refs.form.reset()
+            this.formItems.products = []
+        },
         async getProduct () {
             this.loadingSelect = true
             const req = await fetch(process.env.HOST_BACK+'/foodservice/getProduct/?'+new URLSearchParams({
@@ -143,7 +148,8 @@ export default {
                 headers: { "Content-Type": "application/json" }
             })
             if (req.status == 200) {
-                console.log('ok')
+                this.reset()
+                this.$emit('getProduct')
             }
         }
     }
