@@ -30,7 +30,7 @@
                     fab
                     small
                     color="primary"
-                    :href="'http://127.0.0.1:/foodservice/print/'+sale_id"
+                    :href="host+'/foodservice/print/'+sale_id"
                     target="_blank">
                     <v-icon>mdi-printer</v-icon>
                 </v-btn>
@@ -54,16 +54,15 @@
 </template>
 
 <script>
-import Print from './Print.vue'
 export default {
     name: "Sale",
     emits: ['getProduct'],
     components: {
-        Print
     },
     data () {
         return {
             sale_id: null,
+            host: process.env.HOST_BACK,
             valid: false,
             products: [],
             product: null,
