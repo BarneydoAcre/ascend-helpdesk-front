@@ -13,7 +13,7 @@
         <v-card>
             <v-card-title>Componentes do Produto</v-card-title>
             <v-card-text>
-                <v-form ref="form" lazy-validation>
+                <v-form v-model="valid" ref="form" lazy-validation>
                     <v-row dense>
                         <v-col cols="9">
                             <v-text-field dense filled label="Nome do Produto" v-model="formProduct.name"></v-text-field>
@@ -66,6 +66,7 @@ export default {
     emits: ["getProductSale",],
     data () {
         return {
+            valid: false,
             component: null,
             quantity: null,
             products: [],
@@ -100,6 +101,9 @@ export default {
     mounted () {
     },
     methods: {
+        reset () {
+            this.$refs.form.reset();
+        },
         async addProductSale () {
             const req = await fetch(process.env.HOST_BACK+"/foodservice/addProduct/", {
                 method: "POST",
@@ -108,7 +112,6 @@ export default {
             })
             const res = await req.json()
             if (req.status == 200) {
-                console.log(res)
                 this.formProductItems.product_sale = res
                 this.addProductSaleItems()
             }
@@ -120,7 +123,9 @@ export default {
                 headers: { "Content-Type": "application/json"}
             })
             if (req.status == 200) {
-                // this.dialog = false
+                this.dialog = false
+                this.formProductItems.items = []
+                this.reset()
                 this.$emit('getProductSale')
             }
         },

@@ -26,17 +26,25 @@
                 <v-btn fab small color="success" class="mb-4" @click="addSale">
                     <v-icon>mdi-check</v-icon>
                 </v-btn>
-                <v-btn fab small color="primary">
+                <v-btn v-if="sale_id"
+                    fab
+                    small
+                    color="primary"
+                    :href="'http://127.0.0.1:/foodservice/print/'+sale_id"
+                    target="_blank">
+                    <v-icon>mdi-printer</v-icon>
+                </v-btn>
+                <v-btn v-else
+                    fab
+                    small
+                    color="primary">
                     <v-icon>mdi-printer</v-icon>
                 </v-btn>
             </v-card-text>
             <v-card-actions style="grid-area: info;">
                 <v-row dense class="d-flex align-center">
-                    <v-col cols="3">
-                        <v-checkbox dense filled label="Frete?" v-model="form.delivery"></v-checkbox>
-                    </v-col>
                     <v-col cols="4">
-                        <v-text-field dense label="Valor" type="number" v-model="form.delivery_cost"></v-text-field>
+                        <v-text-field dense label="Valor Frete" type="number" v-model="form.delivery"></v-text-field>
                     </v-col>
                 </v-row>
             </v-card-actions>
@@ -46,13 +54,16 @@
 </template>
 
 <script>
+import Print from './Print.vue'
 export default {
     name: "Sale",
     emits: ['getProduct'],
     components: {
+        Print
     },
     data () {
         return {
+            sale_id: null,
             valid: false,
             products: [],
             product: null,
@@ -62,8 +73,7 @@ export default {
                 company: localStorage.getItem("company"),
                 company_worker: localStorage.getItem("user_id"),
                 value: 0.0,
-                delivery: false,
-                delivery_cost: 0,
+                delivery: 0,
                 total: 0.0,
             },
             formItems: {
@@ -128,17 +138,21 @@ export default {
         },
         async addSale () {
             for (let i = 0; this.formItems.products.length > i; i++) {
-                this.form.value = parseFloat(this.form.value) + parseFloat(this.formItems.products[i].price)
+                this.form.value = parseFloat(this.form.value) + parseFloat(this.formItems.products[i].price)*parseFloat(this.formItems.products[i].quantity)
             }
-            this.form.total = this.form.value + this.form.delivery_cost
+            this.form.total = this.form.value + this.form.delivery
             const req = await fetch(process.env.HOST_BACK+"/foodservice/addSale/", {
                 method: "POST",
                 body: JSON.stringify(this.form),
                 headers: { "Content-Type": "application/json" }
             })
-            this.formItems.sale = await req.json()
+            const res = await req.json()
+            this.formItems.sale = res
+            this.sale_id = res
             if (req.status == 200) {
                 this.addSaleItems()
+                this.form.value = 0
+                this.form.total = 0
             }
         },
         async addSaleItems () {
