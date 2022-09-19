@@ -20,7 +20,11 @@
                 </v-form>
             </v-card-text>
             <v-card-text style="grid-area: table;">
-                <v-data-table :headers="headers" :items="formItems.products" hide-default-footer class="elevation-1"></v-data-table>
+                <v-data-table :headers="headers" :items="formItems.products" :items-per-page="-1" hide-default-footer class="elevation-1">
+                    <template v-slot:item.actions="{ item }">
+                        <v-icon small class="mr-2" @click="formItems.products = formItems.products.filter((i) => { return i.id != item.id })">mdi-delete</v-icon>
+                    </template>
+                </v-data-table>
             </v-card-text>
             <v-card-text style="grid-area: actions;" class="d-flex flex-column justify-start align-center">
                 <v-btn fab small color="success" class="mb-4" @click="addSale">

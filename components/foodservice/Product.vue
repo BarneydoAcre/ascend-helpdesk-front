@@ -1,6 +1,6 @@
 <template>
     <div class="main-foodservice-product">
-        <v-data-table fixed-header height="42vh" :loading="loadingTable" :headers="headers" :items="products" hide-default-footer class="elevation-1"></v-data-table>
+        <v-data-table fixed-header height="42vh" :loading="loadingTable" :headers="headers" :items="products" :items-per-page="-1" hide-default-footer class="elevation-1"></v-data-table>
     </div>
 </template>
 
