@@ -1,6 +1,10 @@
 <template>
     <div class="main-foodservice-productsale">
-        <v-data-table fixed-header height="42vh" :loading="loadingTable" :headers="headers" :items="products" :items-per-page="-1" hide-default-footer class="elevation-1"></v-data-table>
+        <v-data-table fixed-header height="42vh" :loading="loadingTable" :headers="headers" :items="products" :items-per-page="-1" hide-default-footer class="elevation-1">
+            <template v-slot:item.actions="{ item }">
+                <EditProductSale :item="item" :product="products"></EditProductSale>
+            </template>
+        </v-data-table>
     </div>
 </template>
 
