@@ -5,9 +5,7 @@
             <v-card-text style="grid-area: input;">
                 <v-form v-model="valid" ref="form" lazy-validation>
                     <v-row dense>
-                        <v-col cols="7">
-                            <v-select dense :loading="loadingSelect" filled label="Prato" v-model="product" @click="getProduct" :rules="rules" :items="products" item-text="name" item-value="id"></v-select>
-                        </v-col>
+                        <SelectSaleItem ref="selectedItem"></SelectSaleItem>
                         <v-col cols="3">
                             <v-text-field dense filled label="Qtde." v-model="quantity" :rules="rules"></v-text-field>
                         </v-col>
@@ -58,10 +56,12 @@
 </template>
 
 <script>
+import SelectSaleItem from './actions/SelectSaleItem.vue'
 export default {
     name: "Sale",
     emits: ['getProduct'],
     components: {
+        SelectSaleItem
     },
     data () {
         return {
@@ -115,23 +115,10 @@ export default {
             this.$refs.form.reset()
             this.formItems.products = []
         },
-        async getProduct () {
-            this.loadingSelect = true
-            const req = await fetch(process.env.HOST_BACK+'/foodservice/getProduct/?'+new URLSearchParams({
-                token: localStorage.getItem('refresh'),
-                company: localStorage.getItem('company'),
-                type: 2,
-            }), {
-                method: "GET",
-            })
-            const res = await req.json()
-            this.products = res
-            this.loadingSelect = false
-        },
         addItem () {
             let objItem = null
             if (this.formItems.products.filter((i) => {return i.id == this.product}).length == 0) {
-                objItem = this.products.filter((i) => {return i.id == this.product})[0]
+                objItem = this.$refs.selectedItem.products.filter((i) => {return i.id == this.$refs.selectedItem.product})[0]
                 objItem["quantity"] = this.quantity
                 this.formItems.products.push(objItem)
             }
@@ -156,6 +143,7 @@ export default {
                 this.addSaleItems()
                 this.form.value = 0
                 this.form.total = 0
+                this.form.delivery = 0
             }
         },
         async addSaleItems () {
