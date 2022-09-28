@@ -3,9 +3,8 @@
         <template v-slot:activator="{ on, attrs }">
             <v-col cols="7"
             color="primary" 
-            v-bind="attrs" 
-            v-on="on">
-                <v-select dense filled :loading="loadingSelect" @click="filterProduct" label="Prato" v-model="product" :rules="rules" :items="products" item-text="name" item-value="id"></v-select>
+            v-bind="attrs">
+                <v-text-field dense filled :loading="loadingSelect" @click="getProduct" @keydown.enter="filterProduct" label="Prato" v-model="product.name" :rules="rules"></v-text-field>
             </v-col>
         </template>
         <v-card>
@@ -17,7 +16,7 @@
                             <h3>Prato</h3>
                         </v-col>
                         <v-col cols="12">
-                            <v-text-field dense filled label="Produto" v-model="product" @keyup="filterProduct"></v-text-field>
+                            <v-text-field dense filled label="Produto" v-model="product.name" @keyup="filterProduct"></v-text-field>
                         </v-col>
                     </v-row>
                 </v-form>
@@ -42,12 +41,11 @@
 <script>
 export default {
     name: "SelectSaleItem",
-    emits: ["addItem",],
     data () {
         return {
             loadingSelect: false,
             valid: false,
-            product: null,
+            product: { id: null, name: null },
             quantity: null,
             products: [],
             dialog: false,
@@ -102,14 +100,21 @@ export default {
             this.loadingSelect = false
         },
         filterProduct () {
-            if(this.product == null || this.product == '') {
+            if(this.product.name == null || this.product.name == '') {
                 this.filtered = this.products
             }else {
-                this.filtered = this.products.filter((i) => i.name.toLowerCase().includes(this.product.toLowerCase()))
+                this.filtered = this.products.filter((i) => i.name.toLowerCase().includes(this.product.name.toLowerCase()))
+                if (this.filtered.length == 1) {
+                    this.setItem(this.filtered[0].id)
+                }else {
+                    this.dialog = true
+                }
             }
         },
         setItem (id) {
-            this.product = id
+            this.product = this.products.filter((i) => {
+                return i.id == id
+            })[0]
             this.dialog = false
         }    
     }

@@ -7,7 +7,7 @@
                     <v-row dense>
                         <SelectSaleItem ref="selectedItem"></SelectSaleItem>
                         <v-col cols="3">
-                            <v-text-field dense filled label="Qtde." v-model="quantity" :rules="rules"></v-text-field>
+                            <v-text-field dense filled label="Qtde." v-model="quantity" :rules="rules" id="quantityField"></v-text-field>
                         </v-col>
                         <v-col cols="2">
                             <v-btn fab color="primary" @click="validate">
@@ -116,9 +116,17 @@ export default {
             this.formItems.products = []
         },
         addItem () {
-            let objItem = null
-            if (this.formItems.products.filter((i) => {return i.id == this.product}).length == 0) {
-                objItem = this.$refs.selectedItem.products.filter((i) => {return i.id == this.$refs.selectedItem.product})[0]
+            let objItem = {
+                id: null,
+                name: null,
+                price: null,
+                quantity: null,
+            }
+            if (this.formItems.products.filter((i) => {return i.id == this.$refs.selectedItem.product.id}).length == 0) {
+                let product = this.$refs.selectedItem.products.filter((i) => {return i.id == this.$refs.selectedItem.product.id})[0]
+                objItem["id"] = product.id
+                objItem["name"] = product.name
+                objItem["price"] = product.price
                 objItem["quantity"] = this.quantity
                 this.formItems.products.push(objItem)
             }
@@ -156,7 +164,7 @@ export default {
                 this.reset()
                 this.$emit('getProduct')
             }
-        }
+        },
     }
 }
 </script>
