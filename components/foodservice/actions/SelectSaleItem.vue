@@ -105,7 +105,7 @@ export default {
             if(this.product == null || this.product == '') {
                 this.filtered = this.products
             }else {
-                this.filtered = this.products.filter((i) => i.name.includes(this.product))
+                this.filtered = this.products.filter((i) => i.name.toLowerCase().includes(this.product.toLowerCase()))
             }
         },
         setItem (id) {
