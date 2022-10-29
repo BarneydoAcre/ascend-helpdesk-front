@@ -96,7 +96,6 @@ export default {
                 { title: "Administrativo (Em Breve)", icon: "mdi-hand-coin", link: "administrative/", disabled: true },
                 { title: "Projetos (Em Breve)", icon: "mdi-note-text", link: "projects/", disabled: true },
                 { title: "Suporte", icon: "mdi-face-agent", link: "suport/", disabled: false },
-                { title: "Food Service", icon: "mdi-food", link: "foodservice/", disabled: false },
                 { title: "Ajuda (Em Breve)", icon: "mdi-help-box", link: "help/", disabled: true },
             ],
             statusLogin: 0,
